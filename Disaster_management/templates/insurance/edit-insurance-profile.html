@@ -1,0 +1,194 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="shortcut icon" href="{% static 'assets/index/images/favicon.png' %}" type="image/x-icon">
+    <title>Dashboard - Insurance</title>
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+    <link href="{% static 'assets/dashboard/css/style.css' %}" rel="stylesheet" />
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+</head>
+
+<body class="sb-nav-fixed">
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <!-- Navbar Brand-->
+        <a class="navbar-brand ps-3" href="{% url 'insurance-dashboard' %}">
+            <img src="{% static 'assets/index/images/logo.png' %}" alt="logo" class="dashboard-logo">
+        </a>
+        <!-- Sidebar Toggle-->
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
+                class="fas fa-bars"></i></button>
+        <!-- Navbar Search-->
+        <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+            <div class="input-group">
+                <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..."
+                    aria-describedby="btnNavbarSearch" />
+                <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i
+                        class="fas fa-search"></i></button>
+            </div>
+        </form>
+        <!-- Navbar-->
+        <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+            <li class="notification">
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
+                    aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                    <!-- <li><a class="dropdown-item" href="#!">Settings</a></li>
+                    <li><a class="dropdown-item" href="#!">Activity Log</a></li>
+                    <li>
+                        <hr class="dropdown-divider" />
+                    </li> -->
+                    <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-menu custom-sidebar">
+                    <div class="nav custom-navbar">
+                        <a class="nav-link" href="{% url 'insurance-dashboard' %}">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt custom-link"></i></div>
+                            Dashboard
+                        </a>
+                    </div>
+                </div>
+                <div class="sb-sidenav-footer">
+                    <div class="small">Welcome</div>
+                </div>
+            </nav>
+        </div>
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container-fluid px-4">
+                    <h1 class="mt-4 mb-5 text-center">Edit Information</h1>
+                    <ol class="breadcrumb mb-4">
+                        <li class="breadcrumb-item active"><a href="{% url 'insurance-dashboard' %}" class="text-decoration-none text-secondary">Dashboard</a> > Edit Profile</li>
+                    </ol>
+                    <!-- profile section -->
+                    <div class="container-xl px-4 mt-4">
+                        <!-- Account page navigation-->
+                        <div class="row">
+
+                            <div class="col-xl-12">
+                                <!-- Account details card-->
+                                <div class="card mb-4">
+                                    <div class="card-header text-center fs-2 text-success">Profile Details</div>
+                                    <div class="card-body">
+                                        <form method="POST">
+                                            {% csrf_token %}
+                                            <!-- Form Group (station name)-->
+                                            <div class="mb-3">
+                                                <label class="small mb-1" for="inputUsername">Company Name</label>
+                                                <input class="form-control" id="inputUsername" type="text"
+                                                    placeholder="Enter your station name" value="{{insurance.company_name}}" name="company_name" required>
+                                            </div>
+                                            <!-- Form Group (phone no.)-->
+                                            <div class="mb-3">
+                                                <label class="small mb-1" for="inputPhone">Phone number</label>
+                                                <input class="form-control" id="inputPhone" type="tel"
+                                                    placeholder="Enter your phone number" value="{{insurance.phone}}" pattern="\d{10}" maxlength="10" title="Phone number must be in the format 987-654-3210"name="phone" required>
+                                            </div>
+                                            <!-- Form Row-->
+                                            <div class="row gx-3 mb-3">
+                                                <!-- Form Group (username)-->
+                                                <div class="col-md-6">
+                                                    <label class="small mb-1" for="inputLocation">Email</label>
+                                                    <input class="form-control" id="inputLocation" type="text"
+                                                        placeholder="Enter your username" value="{{insurance.email}}" name="email" required>
+                                                </div>
+                                                
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="small mb-1" for="inputPhone">District</label>
+                                                <input class="form-control" id="inputPhone" type="text"
+                                                    placeholder="Enter your district" value="{{insurance.district}}" name="district" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="small mb-1" for="inputPhone">State</label>
+                                                <select class="form-select" id="inputState" name="state" required>
+                                                    <option value="" disabled {% if not insurance.state %}selected{% endif %}>Select State/Union Territory</option>
+                                                    <option value="Andhra Pradesh" {% if insurance.state == "Andhra Pradesh" %}selected{% endif %}>Andhra Pradesh</option>
+                                                    <option value="Arunachal Pradesh" {% if insurance.state == "Arunachal Pradesh" %}selected{% endif %}>Arunachal Pradesh</option>
+                                                    <option value="Assam" {% if insurance.state == "Assam" %}selected{% endif %}>Assam</option>
+                                                    <option value="Bihar" {% if insurance.state == "Bihar" %}selected{% endif %}>Bihar</option>
+                                                    <option value="Chhattisgarh" {% if insurance.state == "Chhattisgarh" %}selected{% endif %}>Chhattisgarh</option>
+                                                    <option value="Goa" {% if insurance.state == "Goa" %}selected{% endif %}>Goa</option>
+                                                    <option value="Gujarat" {% if insurance.state == "Gujarat" %}selected{% endif %}>Gujarat</option>
+                                                    <option value="Haryana" {% if insurance.state == "Haryana" %}selected{% endif %}>Haryana</option>
+                                                    <option value="Himachal Pradesh" {% if insurance.state == "Himachal Pradesh" %}selected{% endif %}>Himachal Pradesh</option>
+                                                    <option value="Jharkhand" {% if insurance.state == "Jharkhand" %}selected{% endif %}>Jharkhand</option>
+                                                    <option value="Karnataka" {% if insurance.state == "Karnataka" %}selected{% endif %}>Karnataka</option>
+                                                    <option value="Kerala" {% if insurance.state == "Kerala" %}selected{% endif %}>Kerala</option>
+                                                    <option value="Madhya Pradesh" {% if insurance.state == "Madhya Pradesh" %}selected{% endif %}>Madhya Pradesh</option>
+                                                    <option value="Maharashtra" {% if insurance.state == "Maharashtra" %}selected{% endif %}>Maharashtra</option>
+                                                    <option value="Manipur" {% if insurance.state == "Manipur" %}selected{% endif %}>Manipur</option>
+                                                    <option value="Meghalaya" {% if insurance.state == "Meghalaya" %}selected{% endif %}>Meghalaya</option>
+                                                    <option value="Mizoram" {% if insurance.state == "Mizoram" %}selected{% endif %}>Mizoram</option>
+                                                    <option value="Nagaland" {% if insurance.state == "Nagaland" %}selected{% endif %}>Nagaland</option>
+                                                    <option value="Odisha" {% if insurance.state == "Odisha" %}selected{% endif %}>Odisha</option>
+                                                    <option value="Punjab" {% if insurance.state == "Punjab" %}selected{% endif %}>Punjab</option>
+                                                    <option value="Rajasthan" {% if insurance.state == "Rajasthan" %}selected{% endif %}>Rajasthan</option>
+                                                    <option value="Sikkim" {% if insurance.state == "Sikkim" %}selected{% endif %}>Sikkim</option>
+                                                    <option value="Tamil Nadu" {% if insurance.state == "Tamil Nadu" %}selected{% endif %}>Tamil Nadu</option>
+                                                    <option value="Telangana" {% if insurance.state == "Telangana" %}selected{% endif %}>Telangana</option>
+                                                    <option value="Tripura" {% if insurance.state == "Tripura" %}selected{% endif %}>Tripura</option>
+                                                    <option value="Uttar Pradesh" {% if insurance.state == "Uttar Pradesh" %}selected{% endif %}>Uttar Pradesh</option>
+                                                    <option value="Uttarakhand" {% if insurance.state == "Uttarakhand" %}selected{% endif %}>Uttarakhand</option>
+                                                    <option value="West Bengal" {% if insurance.state == "West Bengal" %}selected{% endif %}>West Bengal</option>
+                                                    <option value="Andaman and Nicobar Islands" {% if insurance.state == "Andaman and Nicobar Islands" %}selected{% endif %}>Andaman and Nicobar Islands</option>
+                                                    <option value="Chandigarh" {% if insurance.state == "Chandigarh" %}selected{% endif %}>Chandigarh</option>
+                                                    <option value="Dadra and Nagar Haveli and Daman and Diu" {% if insurance.state == "Dadra and Nagar Haveli and Daman and Diu" %}selected{% endif %}>Dadra and Nagar Haveli and Daman and Diu</option>
+                                                    <option value="Lakshadweep" {% if insurance.state == "Lakshadweep" %}selected{% endif %}>Lakshadweep</option>
+                                                    <option value="Delhi" {% if insurance.state == "Delhi" %}selected{% endif %}>Delhi</option>
+                                                    <option value="Puducherry" {% if insurance.state == "Puducherry" %}selected{% endif %}>Puducherry</option>
+                                                    <option value="Ladakh" {% if insurance.state == "Ladakh" %}selected{% endif %}>Ladakh</option>
+                                                    <option value="Jammu and Kashmir" {% if insurance.state == "Jammu and Kashmir" %}selected{% endif %}>Jammu and Kashmir</option>
+                                                </select>
+                                            </div>
+                                            <!-- Save changes button-->
+                                            <button class="btn btn-info text-white" type="submit">Update Profile</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end profile section -->
+                </div>
+            </main>
+            <footer class="py-4 bg-light mt-auto">
+                <div class="container-fluid px-4">
+                    <div class="d-flex align-items-center justify-content-between small">
+                        <div class="text-muted">Copyright &copy; NDMS 2024</div>
+                        <div>
+                            <a href="#">Privacy Policy</a>
+                            &middot;
+                            <a href="#">Terms &amp; Conditions</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
+    <script src="{% static 'assets/dashboard/js/scripts.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+    <script src="{% static 'assets/dashboard/assets/demo/chart-area-demo.js' %}"></script>
+    <script src="{% static 'assets/dashboard/assets/demo/chart-bar-demo.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
+        crossorigin="anonymous"></script>
+    <script src="{% static 'assets/dashboard/js/datatables-simple-demo.js' %}"></script>
+</body>
+
+</html>

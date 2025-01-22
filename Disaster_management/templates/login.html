@@ -1,0 +1,155 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>NDMS</title>
+    <link rel="shortcut icon" href="{% static 'assets/index/images/favicon.png' %}" type="image/x-icon">
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i&display=swap"
+        rel="stylesheet">
+    <link rel="shortcut icon" href="{% static 'assets/index/images/fav.jpg' %}">
+    <link rel="stylesheet" href="{% static 'assets/index/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/index/css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/index/css/animate.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/index/plugins/slider/css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/index/plugins/slider/css/owl.theme.default.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/index/css/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'assets/login/css/style.css' %}">
+    <!-- Google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap"
+        rel="stylesheet">
+
+</head>
+
+<body class="form-login-body">
+    <div class="container-fluid">
+        <div class="top-menu">
+            <div class="container pt-1 pb-1">
+                <div class="row">
+                    <div class="col-md-3 logo">
+                        <a href="{% url 'index' %}"><img src="{% static 'assets/index/images/logo.png' %}" alt="" width="180rem"></a>
+                    </div>
+                    <div class="col-md-9 sup">
+                        <ul>
+                            <li><a href="{% url 'register' %}" type="button"
+                                class="btn btn-sm btn-outline-primary signup-btn"><i class="fas fa-user-plus"></i>
+                                Sign Up</a></li>
+
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <style>
+            img.card-img-top {
+                margin: 0 auto!important;
+                object-fit: contain;
+              }
+        
+                .public-img, .police-img, .volunteer-img, .camp-img {
+                  
+                    margin: 0 auto;
+                }
+      
+        </style>
+        <div class="login-body mb-5">
+            <div class="container">
+                <div class="row justify-content-center m-0 p-3">
+                    <div class="col-xl-3 col-lg-4 col-sm-6">
+                        <div class="card mt-5 mx-auto">
+                            <img src="{% static 'assets/index/images/government.png' %}" class="card-img-top public-img" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title text-center mt-0">Government</h5>
+                                <a href="{% url 'gov-login' %}"
+                                    class="btn btn-primary btn-click-here d-block m-auto">Login</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-sm-6">
+                        <div class="card mt-5 mx-auto">
+                            <img src="{% static 'assets/index/images/publicc.png' %}" class="card-img-top public-img" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title text-center mt-0">Public</h5>
+                                <a href="{% url 'public-login' %}"
+                                    class="btn btn-primary btn-click-here d-block m-auto">Login</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-xl-3 col-lg-4 col-sm-6">
+                        <div class="card mt-5 mx-auto">
+                            <img src="{% static 'assets/index/images/policee.png' %}" class="card-img-top police-img" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title text-center mt-0">Police</h5>
+                                <a href="{% url 'policestation-login' %}" class="btn btn-primary btn-click-here d-block m-auto">Login</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-sm-6">
+                        <div class="card mt-5 mx-auto">
+                            <img src="{% static 'assets/index/images/rescue.png' %}" class="card-img-top police-img" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title text-center mt-0">Rescue</h5>
+                                <a href="{% url 'rescue-login' %}" class="btn btn-primary btn-click-here d-block m-auto text-white">Login</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-xl-3 col-lg-4 col-sm-6">
+                        <div class="card mt-5 mx-auto">
+                            <img src="{% static 'assets/index/images/volunteerr.png' %}" class="card-img-top volunteer-img" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title text-center mt-0">Volunteers</h5>
+                                <a href="{% url 'volunteer-login' %}" class="btn btn-primary btn-click-here d-block m-auto">Login</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-xl-3 col-lg-4 col-sm-6">
+                        <div class="card mt-5 mx-auto">
+                            <img src="{% static 'assets/index/images/campp.png' %}" class="card-img-top camp-img" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title text-center mt-0">Camp</h5>
+                                <a href="{% url 'camp-login' %}" class="btn btn-primary btn-click-here d-block m-auto">Login</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-sm-6">
+                        <div class="card mt-5 mx-auto">
+                            <img src="{% static 'assets/index/images/insurance.png' %}" class="card-img-top camp-img" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title text-center mt-0">Insurance</h5>
+                                <a href="{% url 'insurance-login' %}" class="btn btn-primary btn-click-here d-block m-auto">Login</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="bg-body-tertiary text-center">
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.05);">
+            © 2024 Copyright:
+            <a class="text-reset fw-bold" href="/">Natural Disaster Management System</a>
+          </div>
+    </footer>
+</body>
+
+<script src="{% static 'assets/index/js/jquery-3.2.1.min.js' %}"></script>
+<script src="{% static 'assets/index/js/popper.min.js' %}"></script>
+<script src="{% static 'assets/index/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'assets/index/plugins/scroll-fixed/jquery-scrolltofixed-min.js' %}"></script>
+<script src="{% static 'assets/index/plugins/slider/js/owl.carousel.min.js' %}"></script>
+<script src="{% static 'assets/index/js/script.js' %}"></script>
+
+</html>

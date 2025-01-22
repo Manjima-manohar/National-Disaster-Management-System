@@ -1,0 +1,267 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="shortcut icon" href="{% static 'assets/index/images/favicon.png' %}" type="image/x-icon">
+    <title>Dashboard - Public</title>
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+    <link href="{% static 'assets/dashboard/css/style.css' %}" rel="stylesheet" />
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+</head>
+
+<body class="sb-nav-fixed">
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <!-- Navbar Brand-->
+        <a class="navbar-brand ps-3" href="{% url 'public-dashboard' %}">
+            <img src="{% static 'assets/index/images/logo.png' %}" alt="logo" class="dashboard-logo">
+        </a>
+        <!-- Sidebar Toggle-->
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
+                class="fas fa-bars"></i></button>
+        <!-- Navbar Search-->
+        <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+            <div class="input-group">
+                <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..."
+                    aria-describedby="btnNavbarSearch" />
+                <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i
+                        class="fas fa-search"></i></button>
+            </div>
+        </form>
+        <!-- Navbar-->
+        <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
+                    aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="{% url 'public-profile' %}">Profile</a></li>
+                    <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-menu custom-sidebar">
+                    <div class="nav custom-navbar">
+                        <a class="nav-link" href="{% url 'public-dashboard' %}">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt custom-link"></i></div>
+                            Dashboard
+                        </a>
+                        <a class="nav-link" href="{% url 'public-profile' %}">
+                            <div class="sb-nav-link-icon"><i class="fa-solid fa-user custom-link"></i></div>
+                            Profile
+                        </a>
+                    </div>
+                </div>
+                <div class="sb-sidenav-footer">
+                    <div class="small">Welcome</div>
+                    {{username}}
+                </div>
+            </nav>
+        </div>
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container-fluid px-4">
+                    <h1 class="mt-4 mb-5 text-center">Add More Details</h1>
+                    <ol class="breadcrumb mb-4">
+                        <li class="breadcrumb-item active">Dashboard > Add More Details</li>
+                    </ol>
+                    {% if messages %}
+                    <div>
+                        {% for message in messages %}
+                            <div class="alert {% if message.tags == 'success' %} alert-success {% else %} alert-danger{% endif %} alert-dismissible fade show" role="alert">
+                                {{ message }}
+                                <button type="button" class="btn-close custom-btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        {% endfor %} 
+                    </div>
+                {% endif %}                
+                    <div class="container m-auto">
+                        <form action="#" method="POST" enctype="multipart/form-data" style="min-height: 800px !important;">
+                            {% csrf_token %}
+                            <div class="form first">
+                                <div class="details personal">
+                                    <div class="fields">
+                                        <div class="input-field">
+                                            <label for="state">State/Union Territory</label>
+                                            <select name="state" id="state" onchange="this.form.submit()" required>
+                                                <option disabled {% if not public.state %} selected {% endif %}>Select State/Union Territory</option>
+                                                <option value="Andhra Pradesh" {% if public.state == 'Andhra Pradesh' %} selected {% endif %}>Andhra Pradesh</option>
+                                                <option value="Arunachal Pradesh" {% if public.state == 'Arunachal Pradesh' %} selected {% endif %}>Arunachal Pradesh</option>
+                                                <option value="Assam" {% if public.state == 'Assam' %} selected {% endif %}>Assam</option>
+                                                <option value="Bihar" {% if public.state == 'Bihar' %} selected {% endif %}>Bihar</option>
+                                                <option value="Chhattisgarh" {% if public.state == 'Chhattisgarh' %} selected {% endif %}>Chhattisgarh</option>
+                                                <option value="Goa" {% if public.state == 'Goa' %} selected {% endif %}>Goa</option>
+                                                <option value="Gujarat" {% if public.state == 'Gujarat' %} selected {% endif %}>Gujarat</option>
+                                                <option value="Haryana" {% if public.state == 'Haryana' %} selected {% endif %}>Haryana</option>
+                                                <option value="Himachal Pradesh" {% if public.state == 'Himachal Pradesh' %} selected {% endif %}>Himachal Pradesh</option>
+                                                <option value="Jharkhand" {% if public.state == 'Jharkhand' %} selected {% endif %}>Jharkhand</option>
+                                                <option value="Karnataka" {% if public.state == 'Karnataka' %} selected {% endif %}>Karnataka</option>
+                                                <option value="Kerala" {% if public.state == 'Kerala'  %} selected {% endif %}>Kerala</option>
+                                                <option value="Madhya Pradesh" {% if public.state == 'Madhya Pradesh' %} selected {% endif %}>Madhya Pradesh</option>
+                                                <option value="Maharashtra" {% if public.state == 'Maharashtra' %} selected {% endif %}>Maharashtra</option>
+                                                <option value="Manipur" {% if public.state == 'Manipur' %} selected {% endif %}>Manipur</option>
+                                                <option value="Meghalaya" {% if public.state == 'Meghalaya' %} selected {% endif %}>Meghalaya</option>
+                                                <option value="Mizoram" {% if public.state == 'Mizoram' %} selected {% endif %}>Mizoram</option>
+                                                <option value="Nagaland" {% if public.state == 'Nagaland' %} selected {% endif %}>Nagaland</option>
+                                                <option value="Odisha" {% if public.state == 'Odisha' %} selected {% endif %}>Odisha</option>
+                                                <option value="Punjab" {% if public.state == 'Punjab' %} selected {% endif %}>Punjab</option>
+                                                <option value="Rajasthan" {% if public.state == 'Rajasthan' %} selected {% endif %}>Rajasthan</option>
+                                                <option value="Sikkim" {% if public.state == 'Sikkim' %} selected {% endif %}>Sikkim</option>
+                                                <option value="Tamil Nadu" {% if public.state == 'Tamil Nadu' %} selected {% endif %}>Tamil Nadu</option>
+                                                <option value="Telangana" {% if public.state == 'Telangana' %} selected {% endif %}>Telangana</option>
+                                                <option value="Tripura" {% if public.state == 'Tripura' %} selected {% endif %}>Tripura</option>
+                                                <option value="Uttar Pradesh" {% if public.state == 'Uttar Pradesh' %} selected {% endif %}>Uttar Pradesh</option>
+                                                <option value="Uttarakhand" {% if public.state == 'Uttarakhand' %} selected {% endif %}>Uttarakhand</option>
+                                                <option value="West Bengal" {% if public.state == 'West Bengal' %} selected {% endif %}>West Bengal</option>
+                                                <option value="Andaman and Nicobar Islands" {% if public.state == 'Andaman and Nicobar Islands' %} selected {% endif %}>Andaman and Nicobar Islands</option>
+                                                <option value="Chandigarh" {% if public.state == 'Chandigarh' %} selected {% endif %}>Chandigarh</option>
+                                                <option value="Dadra and Nagar Haveli and Daman and Diu" {% if public.state == 'Dadra and Nagar Haveli and Daman and Diu' %} selected {% endif %}>Dadra and Nagar Haveli and Daman and Diu</option>
+                                                <option value="Lakshadweep" {% if public.state == 'Lakshadweep' %} selected {% endif %}>Lakshadweep</option>
+                                                <option value="Delhi" {% if public.state == 'Delhi' %} selected {% endif %}>Delhi</option>
+                                                <option value="Puducherry" {% if public.state == 'Puducherry' %} selected {% endif %}>Puducherry</option>
+                                                <option value="Ladakh" {% if public.state == 'Ladakh' %} selected {% endif %}>Ladakh</option>
+                                                <option value="Jammu and Kashmir" {% if public.state == 'Jammu and Kashmir' %} selected {% endif %}>Jammu and Kashmir</option>
+                                            </select>
+                                        </div>
+                                        <div class="input-field">
+                                            <label>First Name</label>
+                                            <input type="text" placeholder="Enter your name" name="firstname" value="{{public.first_name}}" required>
+                                        </div>
+                                        <div class="input-field">
+                                            <label>Last Name</label>
+                                            <input type="text" placeholder="Enter your name" name="lastname" value="{{public.last_name}}" required>
+                                        </div>
+                                        <div class="input-field">
+                                            <label>Date of Birth</label>
+                                            <input type="date" placeholder="Enter birth date" id="dob" name="dob" value="{{ public.dob|date:'Y-m-d' }}" required>
+                                        </div>
+                                        <div class="input-field">
+                                            <label>Address</label>
+                                            <textarea name="address" required>{{ public.address }}</textarea>
+                                        </div>
+                                        <div class="input-field">
+                                            <label>Blood Group</label>
+                                            <select name="blood_group" required>
+                                                <option disabled {% if not public.gender %} selected {% endif %}>Select group</option>
+                                                <option {% if public.blood_group == 'B+' %} selected {% endif %}>B+</option>
+                                                <option {% if public.blood_group == 'A+' %} selected {% endif %}>A+</option>
+                                                <option {% if public.blood_group == 'O+' %} selected {% endif %}>O+</option>
+                                                <option {% if public.blood_group == 'A-' %} selected {% endif %}>A-</option>
+                                                <option {% if public.blood_group == 'B-' %} selected {% endif %}>B-</option>
+                                                <option {% if public.blood_group == 'O-' %} selected {% endif %}>O-</option>
+                                                <option {% if public.blood_group == 'AB+' %} selected {% endif %}>AB+</option>
+                                                <option {% if public.blood_group == 'AB-' %} selected {% endif %}>AB-</option>
+                                            </select>
+                                        </div>
+                                        <div class="input-field">
+                                            <label>Email</label>
+                                            <input type="text" placeholder="Enter your email" value="{{public.email}}" name="email" required>
+                                        </div>
+                                        <div class="input-field">
+                                            <label>Mobile Number</label>
+                                            <input type="text" placeholder="Enter mobile number" value="{{public.phone}}" pattern="\d{10}" maxlength="10" title="Phone number must be in the format 987-654-3210" name="phone" required>
+                                        </div>
+                                        <div class="input-field">
+                                            <label>Gender</label>
+                                            <select name="gender" required>
+                                                <option disabled {% if not public.gender %} selected {% endif %}>Select gender</option>
+                                                <option {% if public.gender == 'Male' %} selected {% endif %}>Male</option>
+                                                <option {% if public.gender == 'Female' %} selected {% endif %}>Female</option>
+                                                <option {% if public.gender == 'Others' %} selected {% endif %}>Others</option>
+                                            </select>
+                                        </div>
+                                        <div class="input-field">
+                                            <label>Occupation</label>
+                                            <input type="text" placeholder="Enter your occupation" value="{{public.occupation}}" name="occupation" required>
+                                        </div>
+                                        <div class="input-field">
+                                            <label>Father Name</label>
+                                            <input type="text" placeholder="Enter your father name" value="{{public.father_name}}" name="father_name" required>
+                                        </div>
+                                        <div class="input-field">
+                                            <label>Mother Name</label>
+                                            <input type="text" placeholder="Enter your mother name" value="{{public.mother_name}}" name="mother_name" required>
+                                        </div>
+                                       
+                                        
+                                        <div class="input-field">
+                                            <label>District</label>
+                                            <input type="text" placeholder="Enter your district" value="{{public.district}}" name="district" required>
+                                        </div>
+                                        <div class="input-field">
+                                            <label>Camp Name</label>
+                                            {% if public.camp_name %}
+                                            <!-- Display the existing camp name in a readonly input -->
+                                            <input type="text" value="{{ public.camp_name.camp_name }}" readonly>
+                                            <input type="hidden" name="current_camp_id" value="{{ public.camp_name.id }}">
+                                            {% else %}
+                                            <select name="camp_name" id="camp_name"  required>
+                                                <option disabled selected>Select camp</option>
+                                                {% for camp in camps %}
+                                                <option value="{{ camp.id }}">{{ camp.camp_name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                            {%endif%}
+                                        </div>
+                                        <div class="input-field photo-div">
+                                            <label>Photo</label>
+                                            {% if public.photo %}
+                                            <!-- Display the existing photo -->
+                                            <img src="{{ public.photo.url }}" alt="Current Photo" style="max-width: 150px; max-height: 150px;">
+                                            {% endif %}
+                                            <!-- File input for uploading a new photo -->
+                                            <input type="file" name="photo" {% if not public.photo %} required {% endif %}>
+                                        </div>
+                                        <div class="input-field photo-div">
+                                            <button class="btn btn-info btn-allocate" name="register">Submit</button>
+                                        </div>
+         
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </form>
+                    </div>
+                </div>
+            </main>
+            <footer class="py-4 bg-light mt-5">
+                <div class="container-fluid px-4">
+                    <div class="d-flex align-items-center justify-content-between small">
+                        <div class="text-muted">Copyright &copy; NDMS 2024</div>
+                        <div>
+                            <a href="#">Privacy Policy</a>
+                            &middot;
+                            <a href="#">Terms &amp; Conditions</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <script>
+    var today = new Date().toISOString().split('T')[0];
+    // Set the max attribute to today's date
+      document.getElementById('dob').setAttribute('max', today);
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
+    <script src="{% static 'assets/index/camp.js' %}"></script>
+    <script src="{% static 'assets/dashboard/js/scripts.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+    <script src="{% static 'assets/dashboard/assets/demo/chart-area-demo.js' %}"></script>
+    <script src="{% static 'assets/dashboard/assets/demo/chart-bar-demo.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
+        crossorigin="anonymous"></script>
+    <script src="{% static 'assets/dashboard/js/datatables-simple-demo.js' %}"></script>
+</body>
+
+</html>

@@ -1,0 +1,151 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="shortcut icon" href="{% static 'assets/index/images/favicon.png' %}" type="image/x-icon">
+    <title>Dashboard - Public</title>
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+    <link href="{% static 'assets/dashboard/css/style.css' %}" rel="stylesheet" />
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="{% static 'assets/police/css/style.css' %}">
+</head>
+
+<body class="sb-nav-fixed">
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <!-- Navbar Brand-->
+        <a class="navbar-brand ps-3" href="./public-dashboard.html">
+            <img src="{% static 'assets/index/images/logo.png' %}" alt="logo" class="dashboard-logo">
+        </a>
+        <!-- Sidebar Toggle-->
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
+                class="fas fa-bars"></i></button>
+        <!-- Navbar Search-->
+        <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+            <div class="input-group">
+                <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..."
+                    aria-describedby="btnNavbarSearch" />
+                <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i
+                        class="fas fa-search"></i></button>
+            </div>
+        </form>
+        <!-- Navbar-->
+        <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
+                    aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                    <!-- <li><a class="dropdown-item" href="#!">Settings</a></li>
+                    <li><a class="dropdown-item" href="#!">Activity Log</a></li>
+                    <li>
+                        <hr class="dropdown-divider" />
+                    </li> -->
+                    <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-menu custom-sidebar">
+                    <div class="nav custom-navbar">
+                        <a class="nav-link" href="{% url 'gov-dashboard' %}">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt custom-link"></i></div>
+                            Dashboard
+                        </a>
+                    </div>
+                </div>
+                <div class="sb-sidenav-footer">
+                    <div class="small">Welcome</div>
+                </div>
+            </nav>
+        </div>
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container-fluid px-4">
+                    <h1 class="mt-4 mb-5 text-center text-danger">Public Details Without Camp Members </h1>
+                    <ol class="breadcrumb mb-4">
+                        <li class="breadcrumb-item active"><a href="./public-dashboard.html" class="text-decoration-none text-secondary">Dashboard</a> >Public Details</li>
+                    </ol>
+                    {% if publics.exists %}
+                    <table class="table text-center">
+                        <thead class="table-dark">
+                            <tr>
+                                <th scope="col">First name</th>
+                                <th scope="col">Last name</th>
+                                <th scope="col">Father name</th>
+                                <th scope="col">Mother name</th>
+                                <th scope="col">Address</th>
+                                <th scope="col">District</th>
+                                <th scope="col">Blood group</th>
+                                <th scope="col">Date of Birth</th>
+                                <th scope="col">Gender</th>
+                                <th scope="col">Occupation</th>
+                                <th scope="col">Photo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for public in publics %}
+                            <tr>
+                                <td>{{public.first_name}}</td>
+                                <td>{{public.last_name}}</td>
+                                <td>{{public.father_name}}</td>
+                                <td>{{public.mother_name}}</td>
+                                <td>{{public.address}}</td>
+                                <td>{{public.district}}</td>
+                                <td>{{public.blood_group}}</td>
+                                <td>{{public.dob|date:'Y-m-d' }}</td>
+                                <td>{{public.gender}}</td>
+                                <td>{{public.occupation}}</td>
+                                <td> 
+                                    {% if public.photo %}
+                                    <img src="{{ public.photo.url }}" alt="" width="40rem" height="30rem">
+                                    {% else %}
+                                    <p>No photo available</p>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {%endfor%}
+                        </tbody>
+                    </table>
+                    {% else %}
+                    <p>No public registrations  are currently reported.</p>
+                    {% endif %}
+                </div>
+            </main>
+            <footer class="py-4 bg-light mt-auto">
+                <div class="container-fluid px-4">
+                    <div class="d-flex align-items-center justify-content-between small">
+                        <div class="text-muted">Copyright &copy; NDMS 2024</div>
+                        <div>
+                            <a href="#">Privacy Policy</a>
+                            &middot;
+                            <a href="#">Terms &amp; Conditions</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
+    <script src="{% static 'assets/dashboard/js/scripts.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+    <script src="{% static 'assets/dashboard/assets/demo/chart-area-demo.js' %}"></script>
+    <script src="{% static 'assets/dashboard/assets/demo/chart-bar-demo.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
+        crossorigin="anonymous"></script>
+    <script src="{% static 'assets/dashboard/js/datatables-simple-demo.js' %}"></script>
+
+</body>
+
+</html>

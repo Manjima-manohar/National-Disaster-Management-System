@@ -1,0 +1,215 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="shortcut icon" href="{% static 'assets/index/images/favicon.png' %}" type="image/x-icon">
+    <title>Dashboard - Public</title>
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+    <link href="{% static 'assets/dashboard/css/style.css' %}" rel="stylesheet" />
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+</head>
+
+<body class="sb-nav-fixed">
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <!-- Navbar Brand-->
+        <a class="navbar-brand ps-3" href="{% url 'public-dashboard' %}">
+            <img src="{% static 'assets/index/images/logo.png' %}" alt="logo" class="dashboard-logo">
+        </a>
+        <!-- Sidebar Toggle-->
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
+                class="fas fa-bars"></i></button>
+        <!-- Navbar Search-->
+        <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+            <div class="input-group">
+                <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..."
+                    aria-describedby="btnNavbarSearch" />
+                <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i
+                        class="fas fa-search"></i></button>
+            </div>
+        </form>
+        <!-- Navbar-->
+        <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
+                    aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="{% url 'public-profile' %}">Profile</a></li>
+                    <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-menu custom-sidebar">
+                    <div class="nav custom-navbar">
+                        <a class="nav-link" href="{% url 'public-dashboard' %}">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt custom-link"></i></div>
+                            Dashboard
+                        </a>
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                            data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                            <div class="sb-nav-link-icon"><i class="fa-solid fa-magnifying-glass custom-link"></i></div>
+                            Status
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne"
+                            data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" href="{% url 'status-person-missing' %}">Person Missing</a>
+                                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                                    data-bs-target="#pagesCollapseAuth" aria-expanded="false"
+                                    aria-controls="pagesCollapseAuth">
+                                    Vehicle
+                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                </a>
+                                <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne"
+                                    data-bs-parent="#sidenavAccordionPages">
+                                    <nav class="sb-sidenav-menu-nested nav">
+                                        <a class="nav-link" href="{% url 'public-status-vehicle-missing' %}">Missing</a>
+                                        <a class="nav-link" href="{% url 'public-status-vehicle-damage' %}">Damage</a>
+                                    </nav>
+                                </div>
+                                <a class="nav-link" href="">Relief Fund</a>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+                <div class="sb-sidenav-footer">
+                    <div class="small">Welcome</div>
+                    {{user.username}}
+                </div>
+            </nav>
+        </div>
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container-fluid px-4">
+                    <h1 class="mt-4 mb-5 text-center">Profile Details</h1>
+                    <ol class="breadcrumb mb-4">
+                        <li class="breadcrumb-item active">Dashboard > Profile</li>
+                    </ol>
+
+                    {% if no_public_data %}
+                    <h5>Welcome {{user.username}}</h5>
+                    <p>You do not have a public profile. Please <a href="{% url 'public-registration' %}">fill out the registration form</a>.</p>
+                    {% else %}
+
+                    <div class="container m-auto mb-5" >
+                        <form action="#">
+                        {% for allocation in campallocations %}
+                            <div>
+                                {% if allocation.photo %}
+                                <img src="{{ allocation.photo.url }}" alt="{{ allocation.name }}" width="80rem">
+                                {% else %}
+                                <p>No photo available</p>
+                                {% endif %}
+                                <!-- <img src="{{allocation.photo}}" alt="" width="80rem"> -->
+                            </div>
+                            <div class="form first">
+                                <div class="details personal">
+                                    <div class="fields">
+                                        <div class="input-field">
+                                            <label>First Name</label>
+                                            <input type="text" placeholder="Enter your name" value="{{allocation.first_name}}" readonly required>
+                                        </div>
+                                        <div class="input-field">
+                                            <label>Last Name</label>
+                                            <input type="text" placeholder="Enter your name" value="{{allocation.last_name}}" readonly required>
+                                        </div>
+                                        <div class="input-field">
+                                            <label>Date of Birth</label>
+                                            <input type="date" placeholder="Enter birth date" value="{{ allocation.dob|date:'Y-m-d' }}" readonly required>
+                                        </div>
+                                        <div class="input-field">
+                                            <label>Address</label>
+                                            <textarea required readonly>{{allocation.address}}</textarea>
+                                        </div>
+                                        <div class="input-field">
+                                            <label>Blood Group</label>
+                                            <input type="text" placeholder="Enter your email" readonly required value="{{allocation.blood_group}}">
+                                        </div>
+                                        <div class="input-field">
+                                            <label>Email</label>
+                                            <input type="text" placeholder="Enter your email" readonly required value="{{allocation.email}}">
+                                        </div>
+                                        <div class="input-field">
+                                            <label>Mobile Number</label>
+                                            <input type="number" placeholder="Enter mobile number" readonly required value="{{allocation.phone}}">
+                                        </div>
+                                        <div class="input-field">
+                                            <label>Gender</label>
+                                            <input type="text" placeholder="Enter mobile number" readonly required value="{{allocation.gender}}">
+                                        </div>
+                                        <div class="input-field">
+                                            <label>Occupation</label>
+                                            <input type="text" placeholder="Enter your occupation" readonly required value="{{allocation.occupation}}">
+                                        </div>
+                                        <div class="input-field">
+                                            <label>Father Name</label>
+                                            <input type="text" placeholder="Enter your father name" readonly required value="{{allocation.father_name}}">
+                                        </div>
+                                        <div class="input-field">
+                                            <label>Mother Name</label>
+                                            <input type="text" placeholder="Enter your mother name" readonly required value="{{allocation.mother_name}}">
+                                        </div>
+                                        <div class="input-field">
+                                            <label>State</label>
+                                            <input type="text" placeholder="Enter your district" readonly required value="{{allocation.state}}">
+                                        </div>
+                                        <div class="input-field">
+                                            <label>District</label>
+                                            <input type="text" placeholder="Enter your district" readonly required value="{{allocation.district}}">
+                                        </div>
+                                        <div class="input-field">
+                                            <label>Camp Name</label>
+                                            {% if allocation.camp_name %}
+                                                <input type="text" placeholder="Enter camp name" value="{{ allocation.camp_name.camp_name }}" readonly required>
+                                            {% else %}
+                                                <input type="text" placeholder="No camp assigned" value="No camp assigned" readonly>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                               
+                            </div>
+                        </form>
+                        <a href="{% url 'update-public-profile' allocation.id %}"><button class="btn btn-info mb-5 btn-edit">Edit Profile</button></a>
+                        {%endfor%}
+                    </div>
+                </div>
+                {%endif%}
+            </main>
+            <footer class="py-4 bg-light mt-auto">
+                <div class="container-fluid px-4">
+                    <div class="d-flex align-items-center justify-content-between small">
+                        <div class="text-muted">Copyright &copy; Your Website 2023</div>
+                        <div>
+                            <a href="#">Privacy Policy</a>
+                            &middot;
+                            <a href="#">Terms &amp; Conditions</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
+    <script src="{% static 'assets/dashboard/js/scripts.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+    <script src="{% static 'assets/dashboard/assets/demo/chart-area-demo.js' %}"></script>
+    <script src="{% static 'assets/dashboard/assets/demo/chart-bar-demo.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
+        crossorigin="anonymous"></script>
+    <script src="{% static 'assets/dashboard/js/datatables-simple-demo.js' %}"></script>
+</body>
+
+</html>

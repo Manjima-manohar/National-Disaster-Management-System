@@ -1,0 +1,23 @@
+.btn-click-here{
+    background-color: green !important;
+    border: 1px solid green !important;
+}
+.btn-click-here:hover{
+    background-color: white !important;
+    border: 1px solid green !important;
+    color: green !important;
+}
+.police-login-img{
+    max-width: 100% !important;
+    height: 400px !important;
+    margin-top: 10px !important;
+}
+.volunteer-login-img{
+    max-width: 100% !important;
+    margin-left: 155px !important;
+}
+.camp-login-img{
+    margin-left: 150px !important;
+    margin-top: 50px !important;
+    max-width: 100% !important;
+}
